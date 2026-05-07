@@ -1,0 +1,39 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="account">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">IPT 2026</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+        </li>
+        <li class="nav-item" *ngIf="account.role === Role.Admin">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <span class="text-light me-3">
+          {{ account.firstName }} {{ account.lastName }}
+          <span class="badge bg-secondary ms-1">{{ account.role }}</span>
+        </span>
+        <button class="btn btn-outline-light btn-sm" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Global Alert -->
+<div class="container mt-3" *ngIf="account">
+  <app-alert></app-alert>
+</div>
+
+<!-- Main content -->
+<div [class.container]="account" [class.mt-4]="account">
+  <router-outlet></router-outlet>
+</div>

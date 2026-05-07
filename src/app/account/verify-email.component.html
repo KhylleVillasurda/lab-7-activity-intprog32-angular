@@ -1,0 +1,14 @@
+<div class="card shadow">
+  <div class="card-body p-4 text-center">
+    <div *ngIf="status === VerifyStatus.Verifying">
+      <div class="spinner-border text-primary mb-3"></div>
+      <p class="text-muted">Verifying your email address...</p>
+    </div>
+    <div *ngIf="status === VerifyStatus.Failed">
+      <div class="text-danger mb-3" style="font-size:3rem">✗</div>
+      <h5>Verification Failed</h5>
+      <p class="text-muted">The verification link is invalid or has expired.</p>
+      <a routerLink="/account/login" class="btn btn-outline-primary">Back to Login</a>
+    </div>
+  </div>
+</div>
