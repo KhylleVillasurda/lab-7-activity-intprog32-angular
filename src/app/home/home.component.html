@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title">
+          Welcome, {{ account.firstName }} {{ account.lastName }}!
+        </h4>
+        <p class="card-text text-muted">
+          You're logged in as <strong>{{ account.email }}</strong>
+          with role <span class="badge bg-primary">{{ account.role }}</span>
+        </p>
+        <hr>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="card border-0 bg-light h-100">
+              <div class="card-body">
+                <h6 class="card-title">My Profile</h6>
+                <p class="card-text small text-muted">View and update your account information and password.</p>
+                <a routerLink="/profile" class="btn btn-sm btn-outline-primary">Go to Profile</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="account.role === Role.Admin">
+            <div class="card border-0 bg-light h-100">
+              <div class="card-body">
+                <h6 class="card-title">Admin Panel</h6>
+                <p class="card-text small text-muted">Manage all user accounts in the system.</p>
+                <a routerLink="/admin" class="btn btn-sm btn-outline-danger">Go to Admin</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
