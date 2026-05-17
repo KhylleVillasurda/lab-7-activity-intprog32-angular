@@ -1,59 +1,78 @@
-# Ipt2026Frontend
+# ipt-2026-frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
+Angular frontend for the IPT 2026 project. 
 
-## Development server
+## Package Manager (pnpm)
 
-To start a local development server, run:
+This project uses **pnpm** instead of standard npm or the default Angular CLI (ng) package handling. pnpm was chosen because:
+- **Strictness:** It prevents "phantom dependencies" (accessing packages not explicitly listed in `package.json`).
+- **Efficiency:** It uses a content-addressable store to save disk space and speed up installations.
+- **Cleanliness:** It creates a nested `node_modules` structure that is cleaner and more predictable.
 
+## Prerequisites
+
+Install pnpm globally if you haven't:
 ```bash
-ng serve
+npm install -g pnpm
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Setup
 
 ```bash
-ng generate component component-name
+pnpm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Development
 
 ```bash
-ng generate --help
+pnpm start
 ```
 
-## Building
+Runs on `http://localhost:4200`. By default uses the **fake backend** (no real API needed).
 
-To build the project run:
+### Switching to your real backend (node-mysql-api)
+
+1. Make sure your backend is running on `http://localhost:4000`
+2. Open `src/environments/environment.ts` and set:
+   ```ts
+   useFakeBackend: false,
+   ```
+3. Restart `pnpm start`
+
+That's it — no other code changes needed.
+
+## Build for production
 
 ```bash
-ng build
+pnpm build:prod
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Output goes to `dist/`. The production build **never** uses the fake backend regardless of the flag.
 
-## Running unit tests
+## Deployment (Vercel)
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+1. Push this repo to GitHub
+2. Import the repo on [vercel.com](https://vercel.com)
+3. Vercel auto-detects Angular. Set the build command to `pnpm build:prod`
+4. Set the output directory to `dist/ipt-2026-frontend/browser`
+5. Update the `apiUrl` in `src/environments/environment.prod.ts` to your deployed backend URL
 
-```bash
-ng test
+The `vercel.json` handles Angular SPA client-side routing automatically.
+
+## Project structure
+
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+src/
+├── app/
+│   ├── _components/   # Shared UI components
+│   ├── _helpers/      # Interceptors, guards, fake backend
+│   ├── _models/       # TypeScript interfaces
+│   ├── _services/     # API service layer
+│   ├── account/       # Login, register, forgot/reset password
+│   ├── admin/         # Admin panel (accounts management)
+│   ├── home/          # Home page
+│   └── profile/       # User profile update
+└── environments/
+    ├── environment.ts       # Dev config (useFakeBackend: true by default)
+    └── environment.prod.ts  # Prod config (useFakeBackend: false always)
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
