@@ -1,6 +1,13 @@
 # ipt-2026-frontend
 
-Angular frontend for the IPT 2026 project. Uses pnpm as the package manager.
+Angular frontend for the IPT 2026 project. 
+
+## Package Manager (pnpm)
+
+This project uses **pnpm** instead of standard npm or the default Angular CLI (ng) package handling. pnpm was chosen because:
+- **Strictness:** It prevents "phantom dependencies" (accessing packages not explicitly listed in `package.json`).
+- **Efficiency:** It uses a content-addressable store to save disk space and speed up installations.
+- **Cleanliness:** It creates a nested `node_modules` structure that is cleaner and more predictable.
 
 ## Prerequisites
 
