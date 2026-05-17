@@ -20,8 +20,9 @@ import { HomeComponent } from './home/home.component';
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    // To use a real backend: remove the line below
-    ...(environment.production ? [] : [fakeBackendProvider])
+    // Fake backend: active when environment.useFakeBackend is true
+    // To switch to your real backend (node-mysql-api), set useFakeBackend: false in environment.ts
+    ...(environment.useFakeBackend ? [fakeBackendProvider] : [])
   ],
   bootstrap: [AppComponent]
 })
