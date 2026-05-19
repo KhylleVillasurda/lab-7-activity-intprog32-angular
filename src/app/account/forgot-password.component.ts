@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from '@app/_services/account.service';
 import { AlertService } from '@app/_services/alert.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({ standalone: false, templateUrl: 'forgot-password.component.html' })
 export class ForgotPasswordComponent implements OnInit {
@@ -28,10 +29,14 @@ export class ForgotPasswordComponent implements OnInit {
 
     this.loading = true;
     this.accountService.forgotPassword(this.f['email'].value)
+      .pipe(finalize(() => { this.loading = false; }))
       .subscribe({
-        next: () => this.alertService.success('Check your email for password reset instructions.'),
-        error: err => this.alertService.error(err),
-        complete: () => { this.loading = false; }
+        next: () => {
+          this.alertService.success('Check your email for password reset instructions.');
+          this.form.reset();
+          this.submitted = false;
+        },
+        error: err => this.alertService.error(err)
       });
   }
 }
