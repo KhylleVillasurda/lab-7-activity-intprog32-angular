@@ -21,6 +21,15 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: [Role.Admin] }
   },
+
+  // Safety redirect: the old backend incorrectly generated email links pointing
+  // to /accounts/* (with an 's'). Any user who received one of those old emails
+  // and clicks the link will now be redirected to the correct /account/* path,
+  // preserving the ?token= query string.
+  { path: 'accounts/verify-email',    redirectTo: 'account/verify-email' },
+  { path: 'accounts/reset-password',  redirectTo: 'account/reset-password' },
+
+  // Wildcard must stay last
   { path: '**', redirectTo: '' }
 ];
 
