@@ -42,6 +42,7 @@ export class UpdateComponent implements OnInit {
     this.accountService.update(this.accountService.accountValue!.id, this.form.value)
       .subscribe({
         next: () => {
+          this.loading = false;
           this.alertService.success('Profile updated.', { keepAfterRouteChange: true });
           this.router.navigate(['/profile']);
         },

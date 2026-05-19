@@ -32,7 +32,7 @@ export class ForgotPasswordComponent implements OnInit {
       .pipe(finalize(() => { this.loading = false; }))
       .subscribe({
         next: () => {
-          this.alertService.success('Check your email for password reset instructions.');
+          this.alertService.success('Please check your email for password reset instructions.', { keepAfterRouteChange: true });
           this.form.reset();
           this.submitted = false;
         },
